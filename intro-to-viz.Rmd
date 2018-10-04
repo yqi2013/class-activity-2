@@ -105,6 +105,8 @@ hist(D1$score, col = D1$colors)
 interest.col <- brewer.pal(4, "Dark2")
 
 boxplot(scores ~ interest, D1, col = interest.col)
+
+plot(D1$interest, D1$scores)
 ```
 
 
@@ -117,13 +119,17 @@ D1$login <- sample(1:25, 100, replace = TRUE)
 7. Plot the relationships between logins and scores. Give the plot a title and color the dots according to interest group.
 
 ```{r}
-plot(D1$login, D1$scores, col = interest.col, main = "Student Logins vs. Scores")
+plot(D1$login, D1$scores, col = D1$col1, main = "Student Logins vs. Scores")
+
+D1$col1 <- ifelse(D1$interest == "music", "red", "green")
+
 ```
 
 
 8. R contains several inbuilt data sets, one of these in called AirPassengers. Plot a line graph of the the airline passengers over time using this data set.
 
 ```{r}
+AP <- data.frame(AirPassengers)
 plot(AirPassengers)
 ```
 
