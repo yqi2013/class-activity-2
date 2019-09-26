@@ -147,4 +147,6 @@ library(RColorBrewer)
 
 ```
 
-10. Finally use the knitr function to generate an html document from your work. If you have time, try to change some of the output using different commands from the RMarkdown cheat sheet
+10. Finally use the knitr function to generate an html document from your work. If you have time, try to change some of the output using different commands from the RMarkdown cheat sheet.
+
+11. Commit, Push and Pull Request your work back to the main branch of the repository 
