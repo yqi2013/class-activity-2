@@ -17,7 +17,7 @@ D2 <- filter(D1, schoolyear == 20112012)
 ```{r}
 #Generate a histogramof the percentage of free/reduced lunch students (frl_percent) at each school
 
-hist()
+hist(D2$frl_percent)
 
 #Change the number of breaks to 100, do you get the same impression?
 
@@ -81,13 +81,20 @@ pairs(D5)
 #round rounds numbers to whole number values
 #sample draws a random samples from the groups vector according to a uniform distribution
 
-
+data <- rnorm(100, 75, 15) 
+data <- pmax(1, data)
+data <- pmin(100, data)
+scores <- sample(round(data), 100)
+groups <- c("sport", "music", "nature", "literature")
+interest <- sample(groups, 100, replace = TRUE)
+df1 <- data.frame(scores, interest)
 ```
+
 
 2. Using base R commands, draw a histogram of the scores. Change the breaks in your histogram until you think they best represent your data.
 
 ```{r}
-
+hist(scores, breaks = 10)
 ```
 
 
@@ -95,7 +102,7 @@ pairs(D5)
 
 ```{r}
 #cut() divides the range of scores into intervals and codes the values in scores according to which interval they fall. We use a vector called `letters` as the labels, `letters` is a vector made up of the letters of the alphabet.
-
+df1$group <- cut(scores, breaks = 10, labels = letters[1:10])
 ```
 
 4. Now using the colorbrewer package (RColorBrewer; http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) design a pallette and assign it to the groups in your data on the histogram.
@@ -108,6 +115,8 @@ library(RColorBrewer)
 #Make RColorBrewer palette available to R and assign to your bins
 
 #Use named palette in histogram
+mypalette<-brewer.pal(10,"Paired")
+hist(scores, col = mypalette, breaks = 10)
 
 ```
 
@@ -116,20 +125,25 @@ library(RColorBrewer)
 
 ```{r}
 #Make a vector of the colors from RColorBrewer
-
+boxplot(df1$scores ~ df1$interest, col = mypalette)
 ```
 
 
 6. Now simulate a new variable that describes the number of logins that students made to the educational game. They should vary from 1-25.
 
 ```{r}
-
+logins <- sample(c(1:25), 100, replace = TRUE)
+df2 <- data.frame(scores, interest, logins)
 ```
 
 7. Plot the relationships between logins and scores. Give the plot a title and color the dots according to interest group.
 
 ```{r}
+df2$colors <- ifelse(df2$interest == "music", "red", 
+                     ifelse(df2$interest == "sport", "green", 
+                            ifelse(df2$interest == "nature", "blue", "yellow")))
 
+plot(df2$logins, df2$scores, main = "Logins & Scores", col = df2$colors) 
 
 ```
 
@@ -137,14 +151,14 @@ library(RColorBrewer)
 8. R contains several inbuilt data sets, one of these in called AirPassengers. Plot a line graph of the the airline passengers over time using this data set.
 
 ```{r}
-
+plot(AirPassengers)
 ```
 
 
 9. Using another inbuilt data set, iris, plot the relationships between all of the variables in the data set. Which of these relationships is it appropraiet to run a correlation on? 
 
 ```{r}
-
+plot(iris)
 ```
 
 10. Finally use the knitr function to generate an html document from your work. If you have time, try to change some of the output using different commands from the RMarkdown cheat sheet.
